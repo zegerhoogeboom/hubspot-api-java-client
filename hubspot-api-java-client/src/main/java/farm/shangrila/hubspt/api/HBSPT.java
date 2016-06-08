@@ -259,6 +259,10 @@ public class HBSPT extends AbstractGoogleJsonClient {
         }
 
         @Override
+        public HBSPT.Builder setApplicationName(String applicationName) {
+            return (Builder) super.setApplicationName(applicationName);
+        }
+        @Override
         public HBSPT build() {
             return new HBSPT(this);
         }
