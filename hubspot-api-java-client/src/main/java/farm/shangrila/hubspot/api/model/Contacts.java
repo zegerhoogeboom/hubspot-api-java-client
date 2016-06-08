@@ -15,7 +15,8 @@ public class Contacts {
 		return properties;
 	}
 
-	public void setProperties(List<ContactsProperties> properties) {
+	public Contacts setProperties(List<ContactsProperties> properties) {
 		this.properties = properties;
+		return this;
 	}
 }
