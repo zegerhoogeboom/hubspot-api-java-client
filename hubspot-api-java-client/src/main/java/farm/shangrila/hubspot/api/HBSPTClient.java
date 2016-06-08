@@ -6,6 +6,7 @@ import com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient;
 import com.google.api.client.util.Preconditions;
 
 import farm.shangrila.hubspot.api.model.ContactPropertyOptionsResponse;
+import farm.shangrila.hubspot.api.model.ContactsListResponse;
 
 public class HBSPTClient extends AbstractGoogleJsonClient {
 
@@ -144,7 +145,36 @@ public class HBSPTClient extends AbstractGoogleJsonClient {
 		}
 		
 	}
-	
+
+	public ContactsList contactsList() {
+		return new ContactsList();
+	}
+
+	public class ContactsList {
+
+		public ContactsList.GetContacts contacts(String listId) throws java.io.IOException {
+			ContactsList.GetContacts result = new ContactsList.GetContacts(listId);
+			initialize(result);
+			return result;
+		}
+
+		public class GetContacts extends HBSPTRequest<ContactsListResponse> {
+
+			private static final String REST_PATH = "contacts/v1/lists/{listId}/contacts/all";//"contacts/v1/contact/vid/{listId}/profile";
+
+			@com.google.api.client.util.Key
+			private java.lang.String listId;
+
+			protected GetContacts(String listId) {
+				super(HBSPTClient.this, "GET", REST_PATH, null, ContactsListResponse.class);
+				this.listId = ((String) Preconditions.checkNotNull(listId,
+						"Required parameter listId must be specified."));
+			}
+
+		}
+	}
+
+
 	public ContactPropertiesClient contactsPropertiesClient() {
 		return new ContactPropertiesClient();
 	}
@@ -245,6 +275,11 @@ public class HBSPTClient extends AbstractGoogleJsonClient {
 				,	com.google.api.client.http.HttpRequestInitializer httpRequestInitializer 
 				) {
 			super(transport, jsonFactory, DEFAULT_ROOT_URL, DEFAULT_SERVICE_PATH, httpRequestInitializer, false);
+		}
+
+		@Override
+		public HBSPTClient.Builder setApplicationName(String applicationName) {
+			return (Builder) super.setApplicationName(applicationName);
 		}
 
 		@Override
