@@ -3,9 +3,7 @@ package farm.shangrila.hubspot.api;
 import com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient;
 import com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest;
 import com.google.api.client.util.Preconditions;
-import farm.shangrila.hubspot.api.model.ContactPropertyOptionsResponse;
-import farm.shangrila.hubspot.api.model.ContactsListResponse;
-import farm.shangrila.hubspot.api.model.DealsResponse;
+import farm.shangrila.hubspot.api.model.*;
 
 import java.io.IOException;
 
@@ -77,6 +75,29 @@ public class HBSPTClient extends AbstractGoogleJsonClient {
 
             protected Insert(farm.shangrila.hubspot.api.model.Calendars content) {
                 super(HBSPTClient.this, "POST", REST_PATH, content, farm.shangrila.hubspot.api.model.Calendars.class);
+            }
+
+        }
+    }
+
+    public SingleEmailClient singleEmailClient() {
+        return new SingleEmailClient();
+    }
+
+    public class SingleEmailClient {
+
+        public Send send(SingleEmail content) throws java.io.IOException {
+            Send result = new Send(content);
+            initialize(result);
+            return result;
+        }
+
+        public class Send extends HBSPTRequest<SingleEmailResponse> {
+
+            private static final String REST_PATH = "email/public/v1/singleEmail/send";
+
+            protected Send(SingleEmail content) {
+                super(HBSPTClient.this, "POST", REST_PATH, content, SingleEmailResponse.class);
             }
 
         }
